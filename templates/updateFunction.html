@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>BLOGVERSE</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Audiowide&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../static/create.css">
+</head>
+
+<body>
+    {% extends 'base.html' %}
+    {%block content%}
+    <div class="masterContainer">
+        <a href="{{ url_for('home' ) }}">
+            <button class="close">
+                <img src="../static/images/icons/close.png" alt="">
+            </button>
+        </a>
+        <h2>Create Post</h2>
+
+        <section class="form">
+            <form action="{{ url_for('updateFunction', id=data.id) }}" method="POST" enctype="multipart/form-data">
+                <div>
+                    <input type="text" name="title" class="inputs" id="titleInput" placeholder="Give it a heading"
+                        required value={{data.title}}>
+                </div>
+                <div>
+                    <textarea name="content" class="inputs" id="blog" placeholder="Write your blog..."
+                        required>{{data.content}}</textarea>
+                </div>
+                <div>
+                    <label for="fileInput" class="custom-file-upload">
+
+                        <span id="fileLabel">Choose an image</span>
+                    </label>
+                    <input type="file" id="fileInput" name="image" accept="image/*">
+
+                </div>
+                <input type="submit" name="submit_type" value="Post">
+                <input type="submit" name="submit_type" value="Draft" id="draft">
+                <!-- <textarea name="content" placeholder="Write your blog..." required></textarea>
+            <button type="submit">Post</button> -->
+            </form>
+        </section>
+
+
+    </div>
+    <script>
+        document.getElementById("fileInput").addEventListener("change", function () {
+            let fileName = this.files[0] ? this.files[0].name : "Choose an image";
+            document.getElementById("fileLabel").textContent = fileName;
+        });
+
+
+    </script>
+    {% endblock %}
+</body>
+
+</html>

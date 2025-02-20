@@ -1,0 +1,64 @@
+*{
+    margin: 0;
+}
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #2C1C0C;
+    font-family: 'Normative Pro Bold', sans-serif;
+}
+
+.navbar p{
+    color: #2C1C0C;
+}
+.logo {
+    display: flex;
+    gap: 10px;
+    margin-left: 10px;
+
+    
+}
+
+.logo img {
+    height: 60px;
+    filter: drop-shadow(2px 2px 5px rgba(0, 0, 0, 0.5));
+    
+}
+
+.logo h3 {
+    color: #2C1C0C;
+    font-family: "Audiowide", serif;
+    font-weight: 500;
+    font-style: normal;
+    margin: auto;
+    cursor: pointer;
+}
+
+.nav-boxes a {
+    text-decoration: none;
+    color: #2C1C0C;
+    justify-content: center;
+}
+
+.nav-boxes {
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+    padding-top: 20px;
+}
+.Signup{
+    padding-right: 10px;
+    padding-top: 20px;
+
+}
+.Signup a {
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+
+}
+.fa-regular{
+    font-size: 25px;
+
+}

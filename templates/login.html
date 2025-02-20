@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+
+<body>
+    </div>
+    <div class="container">
+        <span class="bg-animate"></span>
+        <span class="bg-animate2"></span>
+
+        <!-- Flash Messages -->
+        
+
+        <!-- Login Form -->
+        <div class="form-box login">
+            <h2 class="animation" style="--i:0;--j:21">Login</h2>
+            <form action="/signupRoute" method="POST">
+                <input type="hidden" name="form_type" value="login">
+                <div class="input-box animation" style="--i:1;--j:22">
+                    <input type="text" name="email" required>
+                    <label for="">Email</label>
+                    <i class='bx bx-user'></i>
+                </div>
+                <div class="input-box animation" style="--i:2;--j:23">
+                    <input type="password" name="password" required>
+                    <label>Password</label>
+                    <i class='bx bx-lock'></i>
+                </div>
+                <button type="submit" class="btn animation" style="--i:3;--j:24">Login</button>
+                <div class="log-link animation" style="--i:4;--j:25">
+                    <p>Don't have an account?
+                        <a href="#" class="register-link">Sign Up</a>
+                    </p>
+                </div>
+            </form>
+        </div>
+
+        <!-- Registration Form -->
+        <div class="form-box register" id="dietPepsi">
+            <h2 class="animation" style="--i:17;--j:0">Sign up</h2>
+            <form action="/signupRoute" method="POST">
+                <input type="hidden" name="form_type" value="signup" style">
+                <div class="input-box animation" style="--i:18;--j:1">
+                    <input type="text" name="name" required>
+                    <label for="">Username</label>
+                    <i class='bx bx-user'></i>
+                </div>
+                <div class="input-box animation" style="--i:19;--j:2">
+                    <input type="email" name="email" required>
+                    <label for="">Email</label>
+                    <i class='bx bx-envelope'></i>
+                </div>
+                <div class="input-box animation" style="--i:20;--j:3">
+                    <input type="password" name="password" required>
+                    <label>Password</label>
+                    <i class='bx bx-lock'></i>
+                </div>
+                <button type="submit" class="btn animation" style="--i:22;--j:5">Sign Up</button>
+                <div class="log-link animation" style="--i:23;--j:6">
+                    <p>Already have an account?
+                        <a href="#" class="login-link">Login</a>
+                    </p>
+                </div>
+            </form>
+        </div>
+
+        <!-- JavaScript for Form Switching -->
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const container = document.querySelector(".container");
+                const registerLink = document.querySelector(".register-link");
+                const loginLink = document.querySelector(".login-link");
+
+                registerLink.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    container.classList.add("active");
+                });
+
+                loginLink.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    container.classList.remove("active");
+                });
+            });
+        </script>
+    </div>
+</body>
+
+</html>

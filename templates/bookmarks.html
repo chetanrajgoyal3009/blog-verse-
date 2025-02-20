@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% extends 'index.html' %}
+    {% block title %} 
+        <title>Saved Posts</title> 
+    {% endblock %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./static/images/bookmark.css">
+</head>
+<body>
+    {% block content %}
+        <h2>Your Bookmarked Posts</h2>
+        {% if saved_posts %}
+            {% for post in saved_posts %}
+                <div class="post">
+                    <h3>{{ post.title }}</h3>
+                    <p>{{ post.content[:200] }}...</p>
+                    <p><small>By {{ post.author }}</small></p>
+                    {% if post.image %}
+                        <img src="data:image/jpeg;base64,{{ base64.b64encode(post.image).decode('utf-8') }}" alt="Post Image">
+                    {% endif %}
+                    <form action="{{ url_for('bookmark_post', post_id=post.id) }}" method="POST">
+                        <button type="submit">Remove Bookmark</button>
+                    </form>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No bookmarked posts yet.</p>
+        {% endif %}
+    {% endblock %}
+</body>
+</html>

@@ -1,0 +1,138 @@
+
+h2{
+    font-family: 'headings';
+    text-align: center;
+    letter-spacing: 2px;
+}
+
+body{
+    /* background-color: #0e1935; */
+    background-image: url(./images/2.png);
+    background-size: cover;
+    background-attachment: fixed;
+    background-blend-mode:darken;
+    color: #ece2d5;
+    font-family: 'Normative Pro Bold', sans-serif;
+}
+.close{
+    background-color: #b7b7b800;
+    border: none;
+    position: absolute;
+    top: 20px;
+    left: 94%;
+    cursor: pointer;
+}
+.close img{
+    width: 30px;
+}
+.close:hover{
+    scale: 1.1;
+}
+.inputs{
+    border: 0.5px solid #ece2d5;
+    padding: 8px 10px;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+    height: 30px;
+    background-color: #2c1c0c3e;
+    border-bottom:0.5px solid #ece2d5;
+    font-family: 'mono';
+    letter-spacing: 1px;
+    font-size: 1.01rem;
+    color: 2C1C0C;
+    margin: auto;
+    border-radius: 5PX;
+    
+}
+#titleInput{
+    height: 50px;
+    font-family: 'headings';
+    letter-spacing: 2px;
+    font-size: 1.2rem;
+}
+.inputs:focus {
+    outline: none;
+    color: #ece2d5;
+}
+
+input[type="submit"]{
+    position: absolute;
+    font-family: 'mono';
+    background-color: #2C1C0C;
+    color: #ece2d5;
+    border: 1px solid #ece2d5;
+    width: 100px;
+    height: 40px;
+    box-shadow: 0 0 2px #2C1C0C, 0 0 6px #2C1C0C, 0 0 8px #2C1C0C;
+    right: 25px;
+    bottom: 20px;
+
+}
+input[type="submit"]:hover{
+    cursor: pointer;
+    scale: 1.1;
+    transition: ease-in-out 0.2s;
+
+}
+
+
+#blog{
+    min-height: 300px;
+    margin-top: 20px;
+    resize: none;
+}
+
+.masterContainer{
+    margin: auto;
+    margin-top: 60px;
+    max-width: 1000px;
+    min-height: 620px;
+    box-shadow: 0 0 2px #2C1C0C, 0 0 6px #2C1C0C, 0 0 8px #2C1C0C;
+    position: relative;
+    background-color: #2c1c0cd5;
+    padding: 10px 30px;
+    box-sizing: border-box;
+    
+    
+}
+form{
+    
+    margin-top: 50px;
+ 
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 15px;
+    
+    
+}
+
+
+.custom-file-upload {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background-color: #2C1C0C;
+    color: #ece2d5;
+    padding: 10px 15px;
+    border: 1px solid #ece2d5;
+    cursor: pointer;
+    border-radius: 5px;
+    font-family: 'Mono';
+}
+
+.custom-file-upload img {
+    width: 20px;
+    height: 20px;
+}
+
+#fileInput {
+    display: none; /* Hide default file input */
+}
+
+span{
+    font-size: 9pt;
+    color: #ece2d5;
+}

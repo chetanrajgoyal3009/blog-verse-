@@ -1,0 +1,80 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Categories</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./static/cat.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Audiowide&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=EB+Garamond:wght@400;700&family=Special+Elite&display=swap">
+</head>
+<body>
+    {% extends 'base.html' %}
+    {%block content%}
+    <div class="headline-section text-center">
+        <h1>Explore Blog Categories</h1>
+        <div class="search-bar mt-3">
+            <input type="text" class="form-control w-50 mx-auto" placeholder="Search categories...">
+            <img src="https://www.freeiconspng.com/thumbs/search-icon-png/search-icon-png-5.png" alt="Search Icon" class="search-icon">
+        </div>
+    </div>
+
+    <div class="container categories-container">
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card category-card">
+                    <img src="./static/images/life.jpg" class="card-img-top" >
+                    <h5 class="card-title">Lifestyle</h5>
+                    <p class="card-text">Covers a wide range of personal experiences, daily routines, fashion choices, fitness journeys, self-care tips, hostel life stories, and the challenges of balancing studies, work, and social life.</p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card category-card">
+                    <img src="./static/images/finance.webp" class="card-img-top" >
+                    <h5 class="card-title">Finance & Side Hustles</h5>
+                    <p class="card-text">Talks about ways to make, save, or invest money. Can focus on students finding part-time gigs, freelancing, or small business ideas like selling joints (fictional, of course ).</p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card category-card">
+                    <img src="./static/images/tech.jpg" class="card-img-top" >
+                    <h5 class="card-title">Tech & Gadgets</h5>
+                    <p class="card-text">Covers reviews, coding tips, software tools, or emerging technologies like AI, cloud computing, or programming guides. Great for a B.Tech student like you.</p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card category-card">
+                    <img src="./static/images/education.avif" class="card-img-top" >
+                    <h5 class="card-title">Education & Career</h5>
+                    <p class="card-text">Guides on college life, study tips, exam hacks, certifications like Azure, or how to build a strong resume as a CSE student. Helps others navigate academics and future job prospects.</p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card category-card">
+                    <img src="./static/images/health.webp" class="card-img-top" >
+                    <h5 class="card-title">Health & Fitness</h5>
+                    <p class="card-text">Focuses on gym workouts, diet tips (like protein sources for non-chicken eaters), weight loss journeys, or mental health struggles while managing college stress.</p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card category-card">
+                    <img src="./static/images/college.jpg" class="card-img-top" >
+                    <h5 class="card-title">College & Hostel Life</h5>
+                    <p class="card-text">Relatable content about late-night maggi runs, warden troubles, bunking classes, exam pressure, or even those ‘underground businesses.’ Adds humor and reality to the reader’s experience.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    {% endblock %}
+</body>
+</html>
+

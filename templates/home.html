@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link rel="stylesheet" href="./static/home.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+
+<body>
+    {% extends 'base.html' %}
+
+    {% block content %}
+    <main>
+        <div class="postt">
+            <div class="post-input">
+                <img src="{{ url_for('static', filename='images/image.png')}}"
+                    alt="">
+                <textarea placeholder="What's on your mind?" onclick="window.location.href='create';"></textarea>
+            </div>
+            <div class="icons">
+                <a href="{{ url_for('bookmarks') }}"> <i class="fa fa-bookmark"></i></a>
+                <a href="#"> <i class="fa fa-paperclip"></i></a>
+                <a href="#"> <i class="fa fa-map-marker-alt"></i></a>
+                <button>Post</button>
+            </div>
+        </div>
+
+        {% for post in posts %}
+        <div class="post-container">
+            <div class="header">
+                <div class="profile-picture">
+                    <!-- <img src="{{url_for('static', filename='images/profile.jpg')}}" alt=""> -->
+                </div>
+                <div class="user-info">
+                    <h2>{{ post.author }}</h2>
+                    <p>{{ post.timestamp.strftime('%B %d, %Y, %I:%M %p') }}</p>
+                </div>
+
+            </div>
+            <div class="uploaded">
+                <img src="data:image/jpeg;base64,{{ post.image }}" alt="">
+            </div>
+            <br>
+            <br>
+            {{post.title}}
+            <hr class="divider">
+            <div class="post-content">
+                <p>{{ post.content }}</p>
+            </div>
+            <div class="featureIcons">
+                <div class="post-icons">
+                    <a class="like-btn" data-post-id="{{ post.id }}">
+                        <img src="{{ url_for('static', filename='images/icons/like2.png') }}" 
+                             alt="Like" 
+                             class="like-icon {% if session['session-user'] in post.liked_by %}liked{% endif %}">
+                    </a>
+                    <span id="like-count-{{ post.id }}">{{ post.likes }}</span>
+                    
+                    <a href=""><img src="./static/images/icons/comment.png" alt=""></a>
+                </div>
+
+                <div class="edit">
+                    <a href="{{url_for('updateFunction',id=post.id)}}"><img src="./static/images/icons/edit.png"
+                            alt=""></a>
+                    <a href="{{url_for('deleteFunction',id=post.id)}}"><img src="./static/images/icons/delete.png"
+                            alt=""></a>
+                </div>
+            </div>
+
+        </div>
+        {% endfor %}
+    </main>
+
+    <script>
+        document.querySelector("#postButton").addEventListener("click", function () {
+            let postText = document.querySelector("#postText").value.trim();
+
+            if (postText === "") {
+                alert("Please write something before posting.");
+                return;
+            }
+
+            fetch("/create_post", {
+                method: "POST",
+                body: JSON.stringify({ content: postText }),
+                headers: { "Content-Type": "application/json" }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        alert(data.error);
+                    } else {
+                        let newPost = `
+                    <div class="post-container">
+                        <div class="header">
+                            <div class="profile-picture">
+                                <img src="{{ url_for('static', filename='images/profile.jpg')}}" alt="">
+                            </div>
+                            <div class="user-info">
+                                <h2>${data.name}</h2>
+                                <p>${data.timestamp}</p>
+                            </div>
+                        </div>
+                        <p class="post-content">${data.content}</p>
+                        <hr class="divider">
+                    </div>`;
+
+                        document.querySelector("main").insertAdjacentHTML("beforeend", newPost);
+                        document.querySelector("#postText").value = ""; // Clear input
+                    }
+                })
+                .catch(error => console.error("Error:", error));
+        });
+
+        document.querySelectorAll(".like-btn").forEach(button => {
+    button.addEventListener("click", function () {
+        const postId = this.getAttribute("data-post-id");
+        const likeCount = document.getElementById(`like-count-${postId}`);
+        const likeIcon = this.querySelector(".like-icon");
+
+        fetch(`/like/${postId}`, {
+            method: "POST",
+            headers: { "X-Requested-With": "XMLHttpRequest" }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.likes !== undefined) {
+                likeCount.innerText = data.likes; // Update like count
+                likeIcon.classList.toggle("liked", data.liked); // Toggle like state
+            }
+        })
+        .catch(error => console.error("Error:", error));
+    });
+});
+
+
+    </script>
+    {% endblock %}
+</body>
+
+</html>

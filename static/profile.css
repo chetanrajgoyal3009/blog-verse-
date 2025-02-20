@@ -1,0 +1,172 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-image: url(./images/2.png);
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.profile-page {
+    max-width: 100%;
+}
+
+.cover-photo {
+    width: 100%;
+    height: 250px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.profile-content {
+    margin-top: -60px;
+    background: #2c1c0cca;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.profile-header {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    border-bottom: 2px solid #ece2d5;
+    padding-bottom: 20px;
+    margin-bottom: 30px;
+}
+
+.profile-pic {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ece2d5;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+}
+
+.profile-pic:hover {
+    transform: scale(1.05);
+}
+
+.user-info h2 {
+    margin: 0;
+    font-size: 28px;
+    font-weight: 700;
+    color:#ece2d5 ;
+}
+
+.username {
+    color: #ece2d5;
+    font-size: 16px;
+    font-weight: 500;
+    margin: 5px 0;
+}
+
+.bio {
+    color: #555;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.6;
+}
+
+.ranking-card, .skills-card, .contact-card {
+    padding: 20px;
+    border-radius: 12px;
+    background: #ece2d5;
+    margin-top: 25px;
+    text-align: center;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.ranking-card:hover, .skills-card:hover, .contact-card:hover {
+    transform: translateY(-5px);
+}
+
+.ranking-card {
+    background-color: #ece2d5c4;
+}
+
+.skills-card {
+    background-color: #ece2d5c5;
+}
+
+.contact-card {
+    background-color: #ece2d5d1;
+}
+
+.ranking-score {
+    font-size: 32px;
+    font-weight: bold;
+    color: #3a3a3a;
+}
+
+.badge {
+    margin: 5px;
+    font-size: 14px;
+    padding: 8px 16px;
+    border-radius: 20px;
+    background-color: #495057;
+    color: white;
+    transition: background-color 0.3s ease;
+}
+
+.badge:hover {
+    background-color: #007bff;
+}
+
+.post-card {
+    margin-top: 30px;
+}
+
+.post-image {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.card-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #333;
+    margin-top: 15px;
+}
+
+.card-text {
+    font-size: 14px;
+    color: #555;
+    margin-top: 10px;
+}
+
+.card-body {
+    padding: 15px;
+}
+
+.card-body:hover {
+    background-color: #f8f9fa;
+}
+
+@media (max-width: 767px) {
+    .profile-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .profile-pic {
+        width: 100px;
+        height: 100px;
+    }
+
+    .profile-content {
+        padding: 20px;
+    }
+
+    .ranking-card, .skills-card, .contact-card {
+        margin-top: 15px;
+    }
+}

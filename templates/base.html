@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../static/base.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Audiowide&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+
+<body>
+    <div class="navbar">
+        <div class="logo">
+            <img src="{{ url_for('static', filename='/images/Screenshot 2025-02-15 180704.png')}}" alt="">
+            <h3 id="home">BLOGVERSE</h3>
+        </div>
+        <div class="nav-boxes">
+            <a href="{{ url_for('home') }}">Discover</a></li>
+
+            <a href="{{ url_for('categories') }}">Categories</a></li>
+            <a href="{{ url_for('create') }}">Write a Blog</a></li>
+            <a href="{{ url_for('about') }}">About</a></li>
+            <a href="#">Contact</a></li>
+            {% if session['session-user'] %}
+            <a href="{{ url_for('profile') }}"><p>Welcome, {{ session['user-name'] }}!</p></a>
+            <a href="{{ url_for('logout') }}" class="logout">Logout</a>
+            {% else %}
+            <a href="{{ url_for('signup') }}">Login</a>
+            {% endif %}
+        </div>
+        <div class="Signup">
+            <a href="{{ url_for('loginRoute') }}"><i class="fa-regular fa-user"></i>
+            </a>
+        </div>
+    </div>
+    <div class="container">
+        {%block content%}
+        {%endblock%}
+    </div>
+
+</body>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const isLoggedIn = "{{ session['session-user'] }}" !== ""; // Check if the user is logged in
+
+        document.querySelector("#home").addEventListener("click", () => {
+            if (isLoggedIn) {
+                window.location = "/home";  // Redirect to home if logged in
+            } else {
+                window.location = "/";  // Redirect to index if not logged in
+            }
+        });
+    });
+</script>
+
+</html>

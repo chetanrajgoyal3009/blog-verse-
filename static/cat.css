@@ -1,0 +1,90 @@
+body {
+    background-image: url(./images/2.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    font-family: 'Normative Pro Bold', sans-serif;
+
+}
+
+.headline-section {
+    text-align: center;
+    margin-top: 80px;
+    margin-bottom: 60px;
+}
+
+.headline-section h1 {
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 40px;
+    font-family: "Audiowide", serif;
+
+}
+
+.search-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+    margin-bottom: 70px;
+    padding: 10px 20px;
+    background-color: #2c1c0c9b;
+    border-radius: 25px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.search-input {
+    padding: 12px 20px;
+    width: 620px;
+    border: none;
+    border-radius: 25px;
+    outline: none;
+    font-size: 1rem;
+}
+
+.search-icon {
+    margin-left: -45px;
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+}
+
+.categories-container {
+    margin-top: 70px;
+}
+
+.category-card {
+    transition: transform 0.3s;
+    border: none;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.category-card:hover {
+    transform: translateY(-5px);
+}
+
+.card-title {
+    background-color: #a18c71;
+    margin: 0;
+    padding: 15px;
+    font-weight: bold;
+}
+
+.card-text {
+    font-size: 1rem;
+    color: #6c757d;
+    padding: 15px;
+}
+
+.card-img-top {
+    height: 180px;
+    object-fit: cover;
+    width: 100%;
+}
