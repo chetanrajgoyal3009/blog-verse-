@@ -43,17 +43,52 @@
         {%block content%}
         {%endblock%}
     </div>
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-column">
+                <h3>Company</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Our Services</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Affiliate Program</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Get Help</h3>
+                <ul>
+                    <li><a href="#">Contact Us</a></li>
+                 
+                </ul>
+            </div>
+            <div class="footer-column social">
+                <h3>Follow Us</h3>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Blogverse | All rights reserved.</p>
+        </div>
+    </footer>
+    
+           
+    
 
 </body>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        const isLoggedIn = "{{ session['session-user'] }}" !== ""; // Check if the user is logged in
+        const isLoggedIn = "{{ session['session-user'] }}" !== "";
 
         document.querySelector("#home").addEventListener("click", () => {
             if (isLoggedIn) {
-                window.location = "/home";  // Redirect to home if logged in
+                window.location = "/home"; 
             } else {
-                window.location = "/";  // Redirect to index if not logged in
+                window.location = "/";  
             }
         });
     });

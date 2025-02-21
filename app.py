@@ -51,44 +51,6 @@ class Post(db.Model):
         self.image = image
         
 
-        
-class Bookmark(db.Model):
-    __tablename__ = "bookmarks"
-    id = db.Column(db.Integer, primary_key=True)
-    user_email = db.Column(db.String(100), nullable=False)  # User who bookmarked
-    post_id = db.Column(db.Integer, db.ForeignKey("posts.id"))  # Post ID
-    post = db.relationship("Post", backref=db.backref("bookmarked_by", lazy="dynamic"))
-
-    def __init__(self, user_email, post_id):
-        self.user_email = user_email
-        self.post_id = post_id
-        
-        
-
-class Like(db.Model):
-    __tablename__ = "likes"
-    id = db.Column(db.Integer, primary_key=True)
-    user_email = db.Column(db.String(100), nullable=False)
-    post_id = db.Column(db.Integer, db.ForeignKey("posts.id"), nullable=False)
-
-    def __init__(self, user_email, post_id):
-        self.user_email = user_email
-        self.post_id = post_id
-        
-class Comment(db.Model):
-    __tablename__ = "comments"
-    id = db.Column(db.Integer, primary_key=True)
-    post_id = db.Column(db.Integer, db.ForeignKey("posts.id"), nullable=False)  # Link to Post
-    user_email = db.Column(db.String(100), nullable=False)  # User who commented
-    content = db.Column(db.Text, nullable=False)  # Comment text
-    timestamp = db.Column(db.DateTime, default=datetime.utcnow)  # Timestamp
-
-    def __init__(self, post_id, user_email, content):
-        self.post_id = post_id
-        self.user_email = user_email
-        self.content = content
-
-
 @app.route("/")
 def index():
     return render_template("landing.html")
@@ -262,81 +224,6 @@ def updateFunction(id):
 
     return render_template("updateFunction.html", data=post)
 
-
-
-@app.route("/bookmarks")
-def bookmarks():
-    if "session-user" not in session:
-        flash("Please log in to view bookmarks.", "warning")
-        return redirect(url_for("signin"))
-
-    user_email = session["session-user"]
-    saved_posts = Post.query.join(Bookmark, Bookmark.post_id == Post.id).filter(Bookmark.user_email == user_email).all()
-
-    return render_template("bookmarks.html", saved_posts=saved_posts, base64=base64)  # ✅ Pass base64 to the template
-
-
-@app.route("/bookmark/<int:post_id>", methods=["POST"])
-def bookmark_post(post_id):
-    if "session-user" not in session:
-        flash("Please log in to bookmark posts.", "warning")
-        return redirect(url_for("signin"))
-
-    user_email = session["session-user"]
-    existing_bookmark = Bookmark.query.filter_by(user_email=user_email, post_id=post_id).first()
-
-    if existing_bookmark:
-        db.session.delete(existing_bookmark)  # Remove bookmark if it already exists
-        db.session.commit()
-        flash("Bookmark removed!", "info")
-    else:
-        new_bookmark = Bookmark(user_email, post_id)
-        db.session.add(new_bookmark)
-        db.session.commit()
-        # flash("Post bookmarked successfully!", "success")
-
-    return redirect(url_for("home"))
-
-
-@app.route("/like/<int:post_id>", methods=["POST"])
-def like_post(post_id):
-    if "session-user" not in session:
-        return "User not Found"
-    user_email = session["session-user"]
-    post = db.session.get(Post, post_id)
-    if not post:
-        return "Post not Found"
-    existing_like = Like.query.filter_by(user_email=user_email, post_id=post_id).first()
-
-    if existing_like:
-        db.session.delete(existing_like)  # ✅ Unlike the post
-        post.likes -= 1  # ✅ Decrease like count
-        db.session.commit()
-        return {"likes": post.likes, "liked": False}
-    else:
-        new_like = Like(user_email, post_id)
-        db.session.add(new_like)
-        post.likes += 1  # ✅ Increase like count
-        db.session.commit()
-        return {"likes": post.likes, "liked": True}
-
-
-@app.route("/add_comment/<int:post_id>", methods=["POST"])
-def add_comment(post_id):
-    if "session-user" not in session:
-        return jsonify({"error": "Please log in to comment."}), 403
-
-    user_email = session["session-user"]
-    content = request.form.get("content")
-    
-    if not content:
-        return jsonify({"error": "Comment cannot be empty."}), 400
-
-    new_comment = Comment(user_email=user_email, post_id=post_id, content=content)
-    db.session.add(new_comment)
-    db.session.commit()
-
-    return jsonify({"user": user_email, "content": content})
 
 
 @app.route("/post/<int:post_id>")
