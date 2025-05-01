@@ -14,7 +14,7 @@ app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {"connect_args": {"check_same_thread":
 db=SQLAlchemy(app)
 
 class Student(db.Model):
-    __tablename__="usersTable"
+    _tablename_="usersTable"
     SI_NO=db.Column(db.Integer,primary_key=True) 
     name=db.Column(db.String(60))    
     email=db.Column(db.String(100))
@@ -23,7 +23,7 @@ class Student(db.Model):
     # location = db.Column(db.String(100), nullable=True,default="")
     
 
-    def __init__(self,name,email):
+    def _init_(self,name,email):
         self.name=name
         self.email=email
     
@@ -35,7 +35,7 @@ class Student(db.Model):
         
         
 class Post(db.Model):
-    __tablename__ = "posts"
+    _tablename_ = "posts"
     id = db.Column(db.Integer, primary_key=True)
     author = db.Column(db.String(60), nullable=False)
     title = db.Column(db.String(150), nullable=False)
@@ -44,7 +44,7 @@ class Post(db.Model):
     image = db.Column(db.LargeBinary, nullable=True)
     likes = db.Column(db.Integer, default=0)
     
-    def __init__(self, author, title, content,image):
+    def _init_(self, author, title, content,image):
         self.author = author
         self.title = title
         self.content = content
@@ -298,6 +298,126 @@ def update_profile_picture():
 @app.route("/categories")
 def categories():
     return render_template("cat.html")
+
+@app.route("/api/students", methods=["GET"])
+def get_all_students():
+    students = Student.query.all()
+    result = []
+    for s in students:
+        result.append({
+            "SI_NO": s.SI_NO,
+            "name": s.name,
+            "email": s.email,
+            "profile_picture": base64.b64encode(s.profile_picture).decode("utf-8") if s.profile_picture else None
+        })
+    return jsonify(result)
+
+
+
+@app.route("/api/students/<int:student_id>", methods=["GET"])
+def get_student(student_id):
+    student = Student.query.get_or_404(student_id)
+    return jsonify({
+        "SI_NO": student.SI_NO,
+        "name": student.name,
+        "email": student.email,
+        "profile_picture": base64.b64encode(student.profile_picture).decode("utf-8") if student.profile_picture else None
+    })
+
+@app.route("/api/students", methods=["POST"])
+def create_student():
+    data = request.get_json()
+    hashed_pw = generate_password_hash(data["password"])
+    student = Student(name=data["name"], email=data["email"], password_hash=hashed_pw)
+    db.session.add(student)
+    db.session.commit()
+    return jsonify({"message": "Student created", "SI_NO": student.SI_NO})
+
+@app.route("/api/students/<int:student_id>", methods=["PUT"])
+def update_student(student_id):
+    student = Student.query.get_or_404(student_id)
+    data = request.get_json()
+    student.name = data.get("name", student.name)
+    student.email = data.get("email", student.email)
+    if "password" in data:
+        student.password_hash = generate_password_hash(data["password"])
+    db.session.commit()
+    return jsonify({"message": "Student updated"})
+
+@app.route("/api/students/<int:student_id>", methods=["DELETE"])
+def delete_student(student_id):
+    student = Student.query.get_or_404(student_id)
+    db.session.delete(student)
+    db.session.commit()
+    return jsonify({"message": "Student deleted"})
+
+
+@app.route("/api/posts", methods=["GET"])
+def get_all_posts():
+    posts = Post.query.order_by(Post.timestamp.desc()).all()
+    result = []
+    for post in posts:
+        result.append({
+            "id": post.id,
+            "author": post.author,
+            "title": post.title,
+            "content": post.content,
+            "timestamp": post.timestamp.isoformat(),
+            "likes": post.likes,
+            "image": base64.b64encode(post.image).decode("utf-8") if post.image else None
+        })
+    return jsonify(result)
+
+
+@app.route("/api/posts/<int:post_id>", methods=["GET"])
+def get_post(post_id):
+    post = Post.query.get_or_404(post_id)
+    return jsonify({
+        "id": post.id,
+        "author": post.author,
+        "title": post.title,
+        "content": post.content,
+        "timestamp": post.timestamp.isoformat(),
+        "likes": post.likes,
+        "image": base64.b64encode(post.image).decode("utf-8") if post.image else None
+    })
+
+@app.route("/api/posts", methods=["POST"])
+def create_post():
+    data = request.get_json()
+    author = data.get("author")
+    title = data.get("title")
+    content = data.get("content")
+    image = data.get("image")  # base64 encoded string (optional)
+
+    image_data = base64.b64decode(image) if image else None
+
+    new_post = Post(author=author, title=title, content=content, image=image_data)
+    db.session.add(new_post)
+    db.session.commit()
+    return jsonify({"message": "Post created", "id": new_post.id}), 201
+
+
+@app.route("/api/posts/<int:post_id>", methods=["PUT"])
+def update_post(post_id):
+    post = Post.query.get_or_404(post_id)
+    data = request.get_json()
+
+    post.title = data.get("title", post.title)
+    post.content = data.get("content", post.content)
+
+    if "image" in data:
+        post.image = base64.b64decode(data["image"]) if data["image"] else None
+
+    db.session.commit()
+    return jsonify({"message": "Post updated"})
+
+@app.route("/api/posts/<int:post_id>", methods=["DELETE"])
+def delete_post(post_id):
+    post = Post.query.get_or_404(post_id)
+    db.session.delete(post)
+    db.session.commit()
+    return jsonify({"message": "Post deleted"})
 
 
 with app.app_context():
