@@ -308,7 +308,7 @@ def get_all_students():
             "SI_NO": s.SI_NO,
             "name": s.name,
             "email": s.email,
-            "profile_picture": base64.b64encode(s.profile_picture).decode("utf-8") if s.profile_picture else None
+            "password": s.password_hash
         })
     return jsonify(result)
 
@@ -321,7 +321,7 @@ def get_student(student_id):
         "SI_NO": student.SI_NO,
         "name": student.name,
         "email": student.email,
-        "profile_picture": base64.b64encode(student.profile_picture).decode("utf-8") if student.profile_picture else None
+        "password": student.password_hash
     })
 
 @app.route("/api/students", methods=["POST"])
