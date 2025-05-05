@@ -305,7 +305,7 @@ def get_all_students():
     result = []
     for s in students:
         result.append({
-            "SI_NO": s.SI_NO,
+            "id": s.SI_NO,
             "name": s.name,
             "email": s.email,
             "password": s.password_hash
@@ -318,10 +318,11 @@ def get_all_students():
 def get_student(student_id):
     student = Student.query.get_or_404(student_id)
     return jsonify({
-        "SI_NO": student.SI_NO,
+        "id": student.SI_NO,
         "name": student.name,
         "email": student.email,
-        "password": student.password_hash
+        "password": student.password_hash,
+        "profile_picture": base64.b64encode(student.profile_picture).decode("utf-8") if getattr(student, 'profile_picture', None) else None,
     })
 
 @app.route("/api/students", methods=["POST"])
@@ -400,6 +401,7 @@ def create_post():
 
 @app.route("/api/posts/<int:post_id>", methods=["PUT"])
 def update_post(post_id):
+    # Check what format of image is expected here
     post = Post.query.get_or_404(post_id)
     data = request.get_json()
 
