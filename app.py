@@ -173,8 +173,6 @@ def add_post():
         new_post = Post(author=author, title=title, content=content, image=image_data)
         db.session.add(new_post)
         db.session.commit()
-
-        # flash("Post created successfully!", "success")
         return redirect(url_for("home"))
 
     else:
@@ -191,9 +189,7 @@ def deleteFunction(id):
         if post.author == session["user-name"]:
             db.session.delete(post)
             db.session.commit()
-            # flash("Post deleted successfully!", "success")
         else:
-            # flash("You can only delete your own posts!", "danger")
             return redirect(url_for("home"))  
     else:
         flash("Post not found!", "danger")
@@ -232,9 +228,6 @@ def view_post(post_id):
     if not post:
         flash("Post not found!", "danger")
         return redirect(url_for("home"))
-
-    # Convert image to base64 if it exists
-    
     post_image = base64.b64encode(post.image).decode("utf-8")
     return render_template("post.html", post=post, post_image=post_image)
 
@@ -249,18 +242,12 @@ def profile():
     profile_picture = None
     if user.profile_picture:
         profile_picture = base64.b64encode(user.profile_picture).decode("utf-8")
-        # print("✅ Profile picture retrieved successfully!")
     if not user:
         flash("User not found!", "danger")
         return redirect(url_for("home"))
 
-    # Fetch user's posts only
     user_posts = Post.query.filter_by(author=user.name).order_by(Post.timestamp.desc()).all()
-
-    # Fetch the latest blog by the user
     latest_blog = Post.query.filter_by(author=user.name).order_by(Post.timestamp.desc()).first()
-
-    # Convert profile picture and blog image to base64
     profile_picture = None
     if user.profile_picture:
         profile_picture = base64.b64encode(user.profile_picture).decode("utf-8")
@@ -288,10 +275,10 @@ def update_profile_picture():
     if "profile_picture" in request.files:
         image = request.files["profile_picture"]
         if image:
-            user.profile_picture = image.read()  # ✅ Save image in DB
+            user.profile_picture = image.read()
             db.session.commit()
             flash("Profile picture updated successfully!", "success")
-            print("✅ Profile picture updated successfully!")  # Debugging
+            print("Profile picture updated successfully!")
 
     return redirect(url_for("profile"))
 
@@ -426,5 +413,5 @@ with app.app_context():
     db.create_all()  
 
 if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 5000))  # Default to 5000 if PORT not set
+    port = int(os.environ.get('PORT', 5000)) 
     app.run(host='0.0.0.0', port=port)
